@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BlogDiziModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kullanici" Type="varchar" MaxLength="150" />
+          <Property Name="Sifre" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Tbl_Blog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogBaslik" Type="varchar" MaxLength="150" />
+          <Property Name="BlogIcerik" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BlogTarih" Type="smalldatetime" />
+          <Property Name="BlogGorsel" Type="varchar" MaxLength="100" />
+          <Property Name="BlogTur" Type="int" />
+          <Property Name="BlogKategori" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_Hakkımızda">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Aciklama" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_Iletisim">
+          <Key>
+            <PropertyRef Name="MesajID" />
+          </Key>
+          <Property Name="MesajID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdSoyad" Type="varchar" MaxLength="150" />
+          <Property Name="Mail" Type="varchar" MaxLength="150" />
+          <Property Name="Telefon" Type="varchar" MaxLength="150" />
+          <Property Name="Konu" Type="varchar" MaxLength="150" />
+          <Property Name="Mesaj" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_Kategori">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriAd" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Tbl_Tur">
+          <Key>
+            <PropertyRef Name="TurID" />
+          </Key>
+          <Property Name="TurID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TurAd" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Tbl_Yorum">
+          <Key>
+            <PropertyRef Name="YorumID" />
+          </Key>
+          <Property Name="YorumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAd" Type="varchar" MaxLength="150" />
+          <Property Name="Mail" Type="varchar" MaxLength="150" />
+          <Property Name="Yorum" Type="varchar(max)" />
+          <Property Name="YorumBlog" Type="int" />
+        </EntityType>
+        <Association Name="FK_Tbl_Blog_Tbl_Kategori">
+          <End Role="Tbl_Kategori" Type="Self.Tbl_Kategori" Multiplicity="0..1" />
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Kategori">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="Tbl_Blog">
+              <PropertyRef Name="BlogKategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Blog_Tbl_Tur">
+          <End Role="Tbl_Tur" Type="Self.Tbl_Tur" Multiplicity="0..1" />
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Tur">
+              <PropertyRef Name="TurID" />
+            </Principal>
+            <Dependent Role="Tbl_Blog">
+              <PropertyRef Name="BlogTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Yorum_Tbl_Blog">
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="0..1" />
+          <End Role="Tbl_Yorum" Type="Self.Tbl_Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="Tbl_Yorum">
+              <PropertyRef Name="YorumBlog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlogDiziModelStoreContainer">
+          <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Blog" EntityType="Self.Tbl_Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Hakkımızda" EntityType="Self.Tbl_Hakkımızda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Iletisim" EntityType="Self.Tbl_Iletisim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Kategori" EntityType="Self.Tbl_Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Tur" EntityType="Self.Tbl_Tur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Yorum" EntityType="Self.Tbl_Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_Blog_Tbl_Kategori" Association="Self.FK_Tbl_Blog_Tbl_Kategori">
+            <End Role="Tbl_Kategori" EntitySet="Tbl_Kategori" />
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Blog_Tbl_Tur" Association="Self.FK_Tbl_Blog_Tbl_Tur">
+            <End Role="Tbl_Tur" EntitySet="Tbl_Tur" />
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Yorum_Tbl_Blog" Association="Self.FK_Tbl_Yorum_Tbl_Blog">
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+            <End Role="Tbl_Yorum" EntitySet="Tbl_Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BlogDiziModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_Blog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogBaslik" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="BlogIcerik" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BlogTarih" Type="DateTime" Precision="0" />
+          <Property Name="BlogGorsel" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BlogTur" Type="Int32" />
+          <Property Name="BlogKategori" Type="Int32" />
+          <NavigationProperty Name="Tbl_Kategori" Relationship="Self.FK_Tbl_Blog_Tbl_Kategori" FromRole="Tbl_Blog" ToRole="Tbl_Kategori" />
+          <NavigationProperty Name="Tbl_Tur" Relationship="Self.FK_Tbl_Blog_Tbl_Tur" FromRole="Tbl_Blog" ToRole="Tbl_Tur" />
+          <NavigationProperty Name="Tbl_Yorum" Relationship="Self.FK_Tbl_Yorum_Tbl_Blog" FromRole="Tbl_Blog" ToRole="Tbl_Yorum" />
+        </EntityType>
+        <EntityType Name="Tbl_Hakkımızda">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Iletisim">
+          <Key>
+            <PropertyRef Name="MesajID" />
+          </Key>
+          <Property Name="MesajID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdSoyad" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Konu" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Mesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Kategori">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriAd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Blog" Relationship="Self.FK_Tbl_Blog_Tbl_Kategori" FromRole="Tbl_Kategori" ToRole="Tbl_Blog" />
+        </EntityType>
+        <EntityType Name="Tbl_Tur">
+          <Key>
+            <PropertyRef Name="TurID" />
+          </Key>
+          <Property Name="TurID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TurAd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Blog" Relationship="Self.FK_Tbl_Blog_Tbl_Tur" FromRole="Tbl_Tur" ToRole="Tbl_Blog" />
+        </EntityType>
+        <EntityType Name="Tbl_Yorum">
+          <Key>
+            <PropertyRef Name="YorumID" />
+          </Key>
+          <Property Name="YorumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Yorum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="YorumBlog" Type="Int32" />
+          <NavigationProperty Name="Tbl_Blog" Relationship="Self.FK_Tbl_Yorum_Tbl_Blog" FromRole="Tbl_Yorum" ToRole="Tbl_Blog" />
+        </EntityType>
+        <Association Name="FK_Tbl_Blog_Tbl_Kategori">
+          <End Role="Tbl_Kategori" Type="Self.Tbl_Kategori" Multiplicity="0..1" />
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Kategori">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="Tbl_Blog">
+              <PropertyRef Name="BlogKategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Blog_Tbl_Tur">
+          <End Role="Tbl_Tur" Type="Self.Tbl_Tur" Multiplicity="0..1" />
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Tur">
+              <PropertyRef Name="TurID" />
+            </Principal>
+            <Dependent Role="Tbl_Blog">
+              <PropertyRef Name="BlogTur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Yorum_Tbl_Blog">
+          <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="0..1" />
+          <End Role="Tbl_Yorum" Type="Self.Tbl_Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="Tbl_Yorum">
+              <PropertyRef Name="YorumBlog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlogDiziEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Blog" EntityType="Self.Tbl_Blog" />
+          <EntitySet Name="Tbl_Hakkımızda" EntityType="Self.Tbl_Hakkımızda" />
+          <EntitySet Name="Tbl_Iletisim" EntityType="Self.Tbl_Iletisim" />
+          <EntitySet Name="Tbl_Kategori" EntityType="Self.Tbl_Kategori" />
+          <EntitySet Name="Tbl_Tur" EntityType="Self.Tbl_Tur" />
+          <EntitySet Name="Tbl_Yorum" EntityType="Self.Tbl_Yorum" />
+          <AssociationSet Name="FK_Tbl_Blog_Tbl_Kategori" Association="Self.FK_Tbl_Blog_Tbl_Kategori">
+            <End Role="Tbl_Kategori" EntitySet="Tbl_Kategori" />
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Blog_Tbl_Tur" Association="Self.FK_Tbl_Blog_Tbl_Tur">
+            <End Role="Tbl_Tur" EntitySet="Tbl_Tur" />
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Yorum_Tbl_Blog" Association="Self.FK_Tbl_Yorum_Tbl_Blog">
+            <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
+            <End Role="Tbl_Yorum" EntitySet="Tbl_Yorum" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_Admin" EntityType="BlogDiziModel.Tbl_Admin" />
+        </EntityContainer>
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kullanici" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Sifre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BlogDiziModelStoreContainer" CdmEntityContainer="BlogDiziEntities">
+          <EntitySetMapping Name="Tbl_Blog">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Blog">
+              <MappingFragment StoreEntitySet="Tbl_Blog">
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="BlogBaslik" ColumnName="BlogBaslik" />
+                <ScalarProperty Name="BlogIcerik" ColumnName="BlogIcerik" />
+                <ScalarProperty Name="BlogTarih" ColumnName="BlogTarih" />
+                <ScalarProperty Name="BlogGorsel" ColumnName="BlogGorsel" />
+                <ScalarProperty Name="BlogTur" ColumnName="BlogTur" />
+                <ScalarProperty Name="BlogKategori" ColumnName="BlogKategori" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Hakkımızda">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Hakkımızda">
+              <MappingFragment StoreEntitySet="Tbl_Hakkımızda">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Iletisim">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Iletisim">
+              <MappingFragment StoreEntitySet="Tbl_Iletisim">
+                <ScalarProperty Name="MesajID" ColumnName="MesajID" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Konu" ColumnName="Konu" />
+                <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Kategori">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Kategori">
+              <MappingFragment StoreEntitySet="Tbl_Kategori">
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+                <ScalarProperty Name="KategoriAd" ColumnName="KategoriAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Tur">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Tur">
+              <MappingFragment StoreEntitySet="Tbl_Tur">
+                <ScalarProperty Name="TurID" ColumnName="TurID" />
+                <ScalarProperty Name="TurAd" ColumnName="TurAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Yorum">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Yorum">
+              <MappingFragment StoreEntitySet="Tbl_Yorum">
+                <ScalarProperty Name="YorumID" ColumnName="YorumID" />
+                <ScalarProperty Name="KullaniciAd" ColumnName="KullaniciAd" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Yorum" ColumnName="Yorum" />
+                <ScalarProperty Name="YorumBlog" ColumnName="YorumBlog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Admin">
+            <EntityTypeMapping TypeName="BlogDiziModel.Tbl_Admin">
+              <MappingFragment StoreEntitySet="Tbl_Admin">
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Kullanici" ColumnName="Kullanici" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
